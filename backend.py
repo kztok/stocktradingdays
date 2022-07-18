@@ -1,5 +1,4 @@
 from datetime import date, timedelta
-import holidays
 
 def find_delta(begin, end):
     delta = (end - begin).days
@@ -28,7 +27,3 @@ two = date(2022,7,10)
 #hey = enter_date()
 #total = find_delta(hey,two)
 #subtract_weekends(hey,two,total)
-us = holidays.US()
-
-for ptr in holidays.US(years = 2022).items():
-    print(ptr)

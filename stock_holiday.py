@@ -3,17 +3,15 @@ from datetime import date, timedelta
 from venv import create
 from dateutil.easter import *
 
-#import holidays
-#us = holidays.US()
-#for ptr in holidays.US(years = 2022).items():
-#    print(ptr)
+# calculate holiday value out of 365 to make O(1)
+def create_date_value(givenDate):
+    dayValue = 1
+    for m in range(1,givenDate.month()):
+        if(m == 2 && givenDate.year() )
+    return
 
-# class Day:
-#     def __init__(self, year, month, day):
-#         self.year = year
-#         self.month = month
-#         self.day = day
-
+# can refactor by making sub functions
+# consider replacing baseYear date format to int
 def create_new_years(baseYear):
     checkWeekend = date(baseYear.year,1,1).weekday()
     newDay = 1
