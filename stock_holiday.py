@@ -1,14 +1,31 @@
 from calendar import c
 from datetime import date, timedelta
-from venv import create
 from dateutil.easter import *
 
+def find_delta(begin, end):
+    delta = (end - begin).days
+    return delta
+
 # calculate holiday value out of 365 to make O(1)
-def create_date_value(givenDate):
-    dayValue = 1
-    for m in range(1,givenDate.month()):
-        if(m == 2 && givenDate.year() )
-    return
+def calculate_date_value(givenDate):
+    return find_delta(date(givenDate.year,1,1),givenDate) + 1
+
+def calculate_holidays_in_year(givenDate):
+    holidays = [0]
+    isSat = create_new_years(givenDate)
+
+    if(isSat.weekday() != 5): holidays[0] = calculate_date_value(isSat)
+    holidays.append(calculate_date_value(create_mlk_day(givenDate)))
+    holidays.append(calculate_date_value(create_washington_bday(givenDate)))
+    holidays.append(calculate_date_value(create_good_friday(givenDate)))
+    holidays.append(calculate_date_value(create_memorial_day(givenDate)))
+    holidays.append(calculate_date_value(create_juneteenth(givenDate)))
+    holidays.append(calculate_date_value(create_independence_day(givenDate)))
+    holidays.append(calculate_date_value(create_labor_day(givenDate)))
+    holidays.append(calculate_date_value(create_thanksgiving(givenDate)))
+    holidays.append(calculate_date_value(create_christmas(givenDate)))
+
+    return holidays
 
 # can refactor by making sub functions
 # consider replacing baseYear date format to int
@@ -17,8 +34,8 @@ def create_new_years(baseYear):
     newDay = 1
     if(checkWeekend == 6):
         newDay += 1
-    #if changing to class replace return with class creation
-    #if saturday no stock holiday
+    # if changing to class replace return with class creation
+    # if saturday (5) no stock holiday
     return date(baseYear.year,1,newDay)
 
 def create_mlk_day(baseYear):
@@ -29,6 +46,7 @@ def create_mlk_day(baseYear):
         dayBasis = (dayBasis + 1) % 7
     return date(baseYear.year,1,firstMonday + 2*7)
 
+# aka presidents day
 def create_washington_bday(baseYear):
     dayBasis = date(baseYear.year,2,1).weekday()
     firstMonday = 1
@@ -78,21 +96,6 @@ def create_thanksgiving(baseYear):
 
 def create_christmas(baseYear):
     checkWeekend = date(baseYear.year,12,25).weekday()
-    if(checkWeekend == 5): return date(baseYear.year,12,24)
-    if(checkWeekend == 6): return date(baseYear.year,12,26)
-    return date(baseYear.year,7,25)
-
-# print(easter(2024).day)
-# print(create_mlk(date(2024,1,1)))
-# print(create_washington_bday(date(2024,1,1)))
-
-test = date(2022,1,1)
-for i in range(3):
-    # print(create_good_friday(test))
-    # print (create_memorial_day(test))
-    # print(create_juneteenth(test))
-    # print(create_labor_day(test))
-    # print(create_new_years(test))
-    # print(create_thanksgiving(test))
-    print(create_christmas(test))
-    test += timedelta(days = 365)
+    #if(checkWeekend == 5): return date(baseYear.year,12,24)
+    #if(checkWeekend == 6): return date(baseYear.year,12,26)
+    return date(baseYear.year,12,25)

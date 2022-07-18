@@ -1,8 +1,4 @@
-from datetime import date, timedelta
-
-def find_delta(begin, end):
-    delta = (end - begin).days
-    return delta
+from stock_holiday import *
 
 def subtract_weekends(begin,end,total):
     weekdays = total - int(total/7) * 2
@@ -21,9 +17,27 @@ def enter_date():
 
 
 one = date(2020,7,5)
-two = date(2022,7,10)
+two = date(2024,7,10)
 
 
 #hey = enter_date()
-#total = find_delta(hey,two)
+total = find_delta(one,two)
 #subtract_weekends(hey,two,total)
+print(total)
+
+test = date(2022,1,1)
+# for i in range(3):
+#     # print(create_good_friday(test))
+#     # print (create_memorial_day(test))
+#     # print(create_juneteenth(test))
+#     # print(create_labor_day(test))
+#     # print(create_new_years(test))
+#     # print(create_thanksgiving(test))
+#     # print(create_christmas(test))
+#     print(calculate_date_value(date(2022,1,1)))
+#     test += timedelta(days = 365)
+
+check = calculate_holidays_in_year(two)
+
+for i in range(len(check)):
+    print(check[i])
