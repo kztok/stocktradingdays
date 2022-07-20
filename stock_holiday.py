@@ -5,15 +5,16 @@ from dateutil.easter import *
 def find_delta(begin, end):
     delta = (end - begin).days
     return delta
-
-def subtract_weekends(begin,end,total):
-    weekdays = total - int(total/7) * 2
+    
+def calculate_weekends(begin,end):
+    total = find_delta(begin,end)
+    weekends = int(total/7) * 2
     #Check the remaining days (<7) from the end date for weekends.
     for i in range(total % 7):
         dayOfWeek = (end - timedelta(days = i)).weekday()
         if(dayOfWeek == 5 or dayOfWeek == 6):
-            weekdays -= 1
-    return weekdays
+            weekends += 1
+    return weekends
 
 # calculate holiday value out of 365 to make O(1)
 def calculate_date_value(givenDate):
@@ -35,19 +36,28 @@ def calculate_holidays_in_year(givenDate):
     holidays.append(calculate_date_value(create_christmas(givenDate)))
     return holidays
 
-def calculate_holidays_in_range(startDate,endDate,total):
+def calculate_holidays_in_range(startDate,endDate):
     fromDay = calculate_date_value(startDate)
+    holidays = 0
     for i in range(startDate.year,endDate.year + 1):
         checkHolidays = calculate_holidays_in_year(date(i,1,1))
         toDay = calculate_date_value(date(i,12,31)) if(endDate.year != i) else calculate_date_value(endDate)
         for j in range(len(checkHolidays)):
             if(fromDay < checkHolidays[j] and checkHolidays[j] <= toDay):
-                total -= 1
+                holidays += 1
         fromDay = 0
-    return total
+    return holidays
 
+def calculate_trading_days(startDate,endDate):
+    tradingDays = find_delta(startDate,endDate)
+    tradingDays = tradingDays - calculate_weekends(startDate,endDate) - calculate_holidays_in_range(startDate,endDate)
+    return tradingDays
+
+###########################
 
 ##### Create Holidays #####
+
+###########################
 
 # can refactor by making sub functions
 # consider replacing baseYear date format to int
