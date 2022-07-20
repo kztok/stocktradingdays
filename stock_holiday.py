@@ -1,4 +1,4 @@
-from calendar import c
+# from calendar import c
 from datetime import date, timedelta
 from dateutil.easter import *
 
@@ -6,26 +6,48 @@ def find_delta(begin, end):
     delta = (end - begin).days
     return delta
 
+def subtract_weekends(begin,end,total):
+    weekdays = total - int(total/7) * 2
+    #Check the remaining days (<7) from the end date for weekends.
+    for i in range(total % 7):
+        dayOfWeek = (end - timedelta(days = i)).weekday()
+        if(dayOfWeek == 5 or dayOfWeek == 6):
+            weekdays -= 1
+    return weekdays
+
 # calculate holiday value out of 365 to make O(1)
 def calculate_date_value(givenDate):
     return find_delta(date(givenDate.year,1,1),givenDate) + 1
 
 def calculate_holidays_in_year(givenDate):
-    holidays = [0]
+    holidays = []
     isSat = create_new_years(givenDate)
-
-    if(isSat.weekday() != 5): holidays[0] = calculate_date_value(isSat)
+    if(isSat.weekday() != 5): holidays.append(calculate_date_value(isSat))
     holidays.append(calculate_date_value(create_mlk_day(givenDate)))
     holidays.append(calculate_date_value(create_washington_bday(givenDate)))
     holidays.append(calculate_date_value(create_good_friday(givenDate)))
     holidays.append(calculate_date_value(create_memorial_day(givenDate)))
-    holidays.append(calculate_date_value(create_juneteenth(givenDate)))
+    if(2020 < givenDate.year):
+        holidays.append(calculate_date_value(create_juneteenth(givenDate)))
     holidays.append(calculate_date_value(create_independence_day(givenDate)))
     holidays.append(calculate_date_value(create_labor_day(givenDate)))
     holidays.append(calculate_date_value(create_thanksgiving(givenDate)))
     holidays.append(calculate_date_value(create_christmas(givenDate)))
-
     return holidays
+
+def calculate_holidays_in_range(startDate,endDate,total):
+    fromDay = calculate_date_value(startDate)
+    for i in range(startDate.year,endDate.year + 1):
+        checkHolidays = calculate_holidays_in_year(date(i,1,1))
+        toDay = calculate_date_value(date(i,12,31)) if(endDate.year != i) else calculate_date_value(endDate)
+        for j in range(len(checkHolidays)):
+            if(fromDay < checkHolidays[j] and checkHolidays[j] <= toDay):
+                total -= 1
+        fromDay = 0
+    return total
+
+
+##### Create Holidays #####
 
 # can refactor by making sub functions
 # consider replacing baseYear date format to int
@@ -96,6 +118,6 @@ def create_thanksgiving(baseYear):
 
 def create_christmas(baseYear):
     checkWeekend = date(baseYear.year,12,25).weekday()
-    #if(checkWeekend == 5): return date(baseYear.year,12,24)
-    #if(checkWeekend == 6): return date(baseYear.year,12,26)
+    if(checkWeekend == 5): return date(baseYear.year,12,24)
+    if(checkWeekend == 6): return date(baseYear.year,12,26)
     return date(baseYear.year,12,25)
