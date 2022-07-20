@@ -5,7 +5,7 @@ from dateutil.easter import *
 def find_delta(begin, end):
     delta = (end - begin).days
     return delta
-    
+
 def calculate_weekends(begin,end):
     total = find_delta(begin,end)
     weekends = int(total/7) * 2
@@ -52,6 +52,14 @@ def calculate_trading_days(startDate,endDate):
     tradingDays = find_delta(startDate,endDate)
     tradingDays = tradingDays - calculate_weekends(startDate,endDate) - calculate_holidays_in_range(startDate,endDate)
     return tradingDays
+
+def calculate_future_stock_date(fromDate,tradingDays):
+    total = tradingDays + int(tradingDays/7) * 2
+    resultDate = fromDate + timedelta(days = total + 9)
+    while(tradingDays != calculate_trading_days(fromDate,resultDate)):
+        adjust = tradingDays - calculate_trading_days(fromDate,resultDate)
+        resultDate += timedelta(days = adjust)
+    return resultDate
 
 ###########################
 
