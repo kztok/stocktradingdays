@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from stock_holiday import *
 
 # def enter_date():
@@ -18,6 +18,26 @@ from stock_holiday import *
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
+
+@app.route('/result/', methods=['POST'])
+def result():
+    in1 = request.form['Start']
+    in2 = request.form['End']
+    result = float(in1) + float(in2)
+    return render_template(
+        'index.html',
+        input1=in1,
+        input2=in2,
+        result=result
+    )
+
+@app.route('/other')
+def other():
+    return render_template('other.html')
+
+if __name__ == '__main__':
+    app.debug = True
+    app.run()
