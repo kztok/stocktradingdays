@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-from stock_holiday import *
+from prog.stock_holiday import *
+from prog.format_helper import *
 
 # def enter_date():
 #     year = int(input("Year: "))
@@ -27,6 +28,8 @@ def result():
     in1 = date_format_conversion(request.form['Start'])
     in2 = date_format_conversion(request.form['End'])
     result = calculate_trading_days(in1,in2)
+    in1 = readable_date(in1)
+    in2 = readable_date(in2)
     return render_template(
         'index.html',
         input1=in1,

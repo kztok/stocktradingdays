@@ -2,12 +2,6 @@
 from datetime import date, timedelta
 from dateutil.easter import *
 
-def date_format_conversion(original):
-
-    numbers = list(map(int,original.split("-")))
-    # return date(numbers[0],numbers[1],numbers[2])
-    return date(numbers[0],numbers[1],numbers[2])
-
 def find_delta(begin, end):
     delta = (end - begin).days
     return delta
@@ -15,7 +9,7 @@ def find_delta(begin, end):
 def calculate_weekends(begin,end):
     total = find_delta(begin,end)
     weekends = int(total/7) * 2
-    #Check the remaining days (<7) from the end date for weekends.
+    # check the remaining days (<7) from the end date for weekends.
     for i in range(total % 7):
         dayOfWeek = (end - timedelta(days = i)).weekday()
         if(dayOfWeek == 5 or dayOfWeek == 6):
