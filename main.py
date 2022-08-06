@@ -34,9 +34,9 @@ def result():
         result=result
     )
 
-@app.route('/other')
-def other():
-    return render_template('other.html')
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 if __name__ == '__main__':
     app.debug = True

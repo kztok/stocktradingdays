@@ -8,18 +8,25 @@
 
 <body>
 
-    <a href="{{url_for('other')}}">other.html</a>
+    <div class="header">
+        <a href="{{url_for('index')}}">StockTradingDays</a>
+    </div>
 
-    <div class="header">StockTradingDays</div>
-
-    <form method="post" action="{{url_for('result')}}" id="date_entry">
-        <label for="Start">From:</label>
-        <input type="text" name="Start" id="Start">
-        <label for="End">To:</label>
-        <input type="text" name="End" id="End">
-        <input type="submit" value="Submit"/>
-    </form>
-    <br/>
-    <p>Hey its {{input1}} + {{input2}} is: {{result}}</p>
+    <div class="main">
+        <div class="one">
+            <h3>Find Next Trading Day By Date</h3>
+            <form method="post" action="{{url_for('result')}}" id="date_entry">
+                <label for="Start">From:</label>
+                <input type="text" name="Start" id="Start">
+                <label for="End">To:</label>
+                <input type="text" name="End" id="End">
+                <input type="submit" value="Submit"/>
+            </form>
+            <br/>
+            <input class="date" type="date" >
+            <br/>
+            <p>Hey its {{input1}} + {{input2}} is: {{result}}</p>
+        </div>
+    </div>
 </body>
 </html>
