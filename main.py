@@ -24,9 +24,9 @@ def index():
 
 @app.route('/result/', methods=['POST'])
 def result():
-    in1 = request.form['Start']
-    in2 = request.form['End']
-    result = float(in1) + float(in2)
+    in1 = date_format_conversion(request.form['Start'])
+    in2 = date_format_conversion(request.form['End'])
+    result = calculate_trading_days(in1,in2)
     return render_template(
         'index.html',
         input1=in1,

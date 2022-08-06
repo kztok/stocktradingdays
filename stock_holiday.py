@@ -2,6 +2,12 @@
 from datetime import date, timedelta
 from dateutil.easter import *
 
+def date_format_conversion(original):
+
+    numbers = list(map(int,original.split("-")))
+    # return date(numbers[0],numbers[1],numbers[2])
+    return date(numbers[0],numbers[1],numbers[2])
+
 def find_delta(begin, end):
     delta = (end - begin).days
     return delta

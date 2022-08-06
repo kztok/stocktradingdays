@@ -17,14 +17,11 @@
             <h3>Find Next Trading Day By Date</h3>
             <form method="post" action="{{url_for('result')}}" id="date_entry">
                 <label for="Start">From:</label>
-                <input type="text" name="Start" id="Start">
+                <input type="date" name="Start" id="date">
                 <label for="End">To:</label>
-                <input type="text" name="End" id="End">
+                <input type="date" name="End" id="date">
                 <input type="submit" value="Submit"/>
             </form>
-            <br/>
-            <input class="date" type="date" >
-            <br/>
             <p>Hey its {{input1}} + {{input2}} is: {{result}}</p>
         </div>
     </div>

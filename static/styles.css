@@ -24,9 +24,12 @@ body {
     padding: 16px 24px;
 }
 
-input.date{
-    color: green;
-    font-size: 24px;
+.one {
+    font-size: 18px;
+}
+
+#date{
+    font-size: 18px;
 }
 
 .about {
