@@ -54,8 +54,9 @@ def calculate_trading_days(startDate,endDate):
     return tradingDays
 
 def calculate_future_stock_date(fromDate,tradingDays):
-    total = tradingDays + int(tradingDays/7) * 2
-    resultDate = fromDate + timedelta(days = total + 9)
+    # add weekends and add 9 holidays for an estimate
+    estimate = tradingDays + int(tradingDays/7) * 2
+    resultDate = fromDate + timedelta(days = estimate + 9)
     while(tradingDays != calculate_trading_days(fromDate,resultDate)):
         adjust = tradingDays - calculate_trading_days(fromDate,resultDate)
         resultDate += timedelta(days = adjust)

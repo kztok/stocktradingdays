@@ -25,23 +25,48 @@ def index():
 
 @app.route('/by_date/', methods=['POST'])
 def by_date():
-    in1 = date_format_conversion(request.form['Start'])
-    in2 = date_format_conversion(request.form['End'])
-    result = calculate_trading_days(in1,in2)
-    in1 = readable_date(in1)
-    in2 = readable_date(in2)
-    return render_template(
-        'index.html',
-        input1=in1,
-        input2=in2,
-        result=result
-    )
+    try:
+        in1 = date_format_conversion(request.form['from1'])
+        in2 = date_format_conversion(request.form['to'])
+        result = calculate_trading_days(in1,in2)
+        result_date = readable_date(calculate_future_stock_date(in2,result))
+        in1 = readable_date(in1)
+        in2 = readable_date(in2)
+        return render_template(
+            'index.html',
+            input1=in1,
+            input2=in2,
+            result_td=result,
+            result_date=result_date,
+            pass_date=True
+        )
+    except:
+        return render_template(
+            'index.html',
+            pass_date=False,
+            error="Check for appropriate inputs and try again"
+        )
 
 @app.route('/by_day/', methods=['POST'])
 def by_day():
-    return render_template(
-        'index.html'
-    )
+    try:
+        in3 = date_format_conversion(request.form['from2'])
+        in4 = int(request.form['days'])
+        result = readable_date(calculate_future_stock_date(in3,in4))
+        in3 = readable_date(in3)
+        return render_template(
+            'index.html',
+            input3=in3,
+            input4=in4,
+            result_day=result,
+            pass_day=True
+        )
+    except:
+        return render_template(
+            'index.html',
+            pass_day=False,
+            error="Check for appropriate inputs and try again"
+        )
 
 @app.route('/about')
 def about():
