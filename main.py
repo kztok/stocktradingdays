@@ -23,8 +23,8 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/result/', methods=['POST'])
-def result():
+@app.route('/by_date/', methods=['POST'])
+def by_date():
     in1 = date_format_conversion(request.form['Start'])
     in2 = date_format_conversion(request.form['End'])
     result = calculate_trading_days(in1,in2)
@@ -35,6 +35,12 @@ def result():
         input1=in1,
         input2=in2,
         result=result
+    )
+
+@app.route('/by_day/', methods=['POST'])
+def by_day():
+    return render_template(
+        'index.html'
     )
 
 @app.route('/about')
