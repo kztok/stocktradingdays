@@ -7,7 +7,6 @@
 </head>
 
 <body>
-
     <div class="header">
         <a href="{{url_for('index')}}">StockTradingDays</a>
     </div>
@@ -22,17 +21,20 @@
                 <input type="date" name="to" id="to">
                 <input type="submit"/>
             </form>
-            {% if pass_date == True %}
-                <p>Amount of trading days: <strong>{{result_td}}</strong>
-                </br>
-                From: <strong>{{input1}}</strong> To: <strong>{{input2}}</strong>
-                </br>
-                Next Date: <strong>{{result_date}}</strong></p>
+            {% if passDate == True %}
+                {% if inRange == True %}
+                    <p>Amount of trading days: <strong>{{resultTd}}</strong>
+                    </br>
+                    From: <strong>{{input1}}</strong> To: <strong>{{input2}}</strong>
+                    </br>
+                    Next Date: <strong>{{resultDate}}</strong></p>
+                {% else %}
+                    <p>Keep dates in chronological order</p>
+                {% endif %}
             {% endif %}
-            {% if pass_date == False %}
+            {% if passDate == False %}
                 <p>{{error}}</p>
             {% endif %}
-
         </div>
         <div class="two">
             <h3>Find Next Trading Day By Days</h3>
@@ -40,20 +42,24 @@
                 <label for="from2">From:</label>
                 <input type="date" name="from2" id="from2">
                 <label for="days">Days:</label>
-                <input type="number" name="days" id="days">
+                <input type="number" name="days" id="days" min="1" max="999">
                 <input type="submit"/>
             </form>
-            {% if pass_day == True %}
+            {% if passDay == True %}
                 <p>Amount of trading days: <strong>{{input4}}</strong>
                 </br>
                 From: <strong>{{input3}}</strong>
                 </br>
-                Next Date: <strong>{{result_day}}</strong></p>
+                Next Date: <strong>{{resultDay}}</strong></p>
             {% endif %}
-            {% if pass_day == False %}
+            {% if passDay == False %}
                 <p>{{error}}</p>
             {% endif %}
         </div>
+    </div>
+
+    <div class="footer">
+        <a href="{{url_for('about')}}">About</a>
     </div>
 </body>
 </html>

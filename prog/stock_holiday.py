@@ -70,6 +70,7 @@ def calculate_future_stock_date(fromDate,tradingDays):
 
 # can refactor by making sub functions
 # consider replacing baseYear date format to int
+
 def create_new_years(baseYear):
     checkWeekend = date(baseYear.year,1,1).weekday()
     newDay = 1

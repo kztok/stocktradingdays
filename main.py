@@ -28,23 +28,27 @@ def by_date():
     try:
         in1 = date_format_conversion(request.form['from1'])
         in2 = date_format_conversion(request.form['to'])
+        inRange = True
+        if in1 >= in2:
+            inRange = False
         result = calculate_trading_days(in1,in2)
-        result_date = readable_date(calculate_future_stock_date(in2,result))
+        resultDate = readable_date(calculate_future_stock_date(in2,result))
         in1 = readable_date(in1)
         in2 = readable_date(in2)
         return render_template(
             'index.html',
-            input1=in1,
-            input2=in2,
-            result_td=result,
-            result_date=result_date,
-            pass_date=True
+            input1 = in1,
+            input2 = in2,
+            resultTd = result,
+            resultDate = resultDate,
+            inRange = inRange,
+            passDate = True
         )
     except:
         return render_template(
             'index.html',
-            pass_date=False,
-            error="Check for appropriate inputs and try again"
+            passDate = False,
+            error = "Check for appropriate inputs and try again"
         )
 
 @app.route('/by_day/', methods=['POST'])
@@ -56,16 +60,16 @@ def by_day():
         in3 = readable_date(in3)
         return render_template(
             'index.html',
-            input3=in3,
-            input4=in4,
-            result_day=result,
-            pass_day=True
+            input3 = in3,
+            input4 = in4,
+            resultDay = result,
+            passDay = True
         )
     except:
         return render_template(
             'index.html',
-            pass_day=False,
-            error="Check for appropriate inputs and try again"
+            passDay = False,
+            error = "Check for appropriate inputs and try again"
         )
 
 @app.route('/about')
