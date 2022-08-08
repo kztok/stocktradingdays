@@ -2,21 +2,6 @@ from flask import Flask, render_template, request
 from prog.stock_holiday import *
 from prog.format_helper import *
 
-# def enter_date():
-#     year = int(input("Year: "))
-#     month = int(input("Month: "))
-#     day = int(input("Day: "))
-#     return date(year,month,day)
-
-# # for i in range(2019,2024):
-# #     print(i+1)
-# one = date(2022,5,1)
-# two = date(2022,5,5)
-# print("total: ")
-# # print(calculate_trading_days(one,two))
-# # print(calculate_future_stock_date(two,calculate_trading_days(one,two)))
-# print(calculate_future_stock_date(two,58))
-
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
