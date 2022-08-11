@@ -49,5 +49,10 @@ body {
 }
 
 .about {
-    color: blue;
+    width: 500px;
+}
+
+ul,li {
+    margin: 0;
+    padding: 0;
 }
