@@ -1,12 +1,25 @@
 from flask import Flask, render_template, request
+from prog.stock_chart import *
 from prog.stock_holiday import *
 from prog.format_helper import *
+
+stickyGraph = 0
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
+
+@app.route('/stock/', methods=['POST'])
+def stock():
+    ticker = request.form['ticker']
+    global stickyGraph 
+    stickyGraph = save_chart(stock_chart(ticker),ticker)
+    return render_template(
+        'index.html',
+        sticky = stickyGraph
+        )
 
 @app.route('/by_date/', methods=['POST'])
 def by_date():
@@ -27,12 +40,14 @@ def by_date():
             resultTd = result,
             resultDate = resultDate,
             inRange = inRange,
+            sticky = stickyGraph,
             passDate = True
         )
     except:
         return render_template(
             'index.html',
             passDate = False,
+            sticky = stickyGraph,
             error = "Check for appropriate inputs and try again"
         )
 
@@ -48,12 +63,14 @@ def by_day():
             input3 = in3,
             input4 = in4,
             resultDay = result,
+            sticky = stickyGraph,
             passDay = True
         )
     except:
         return render_template(
             'index.html',
             passDay = False,
+            sticky = stickyGraph,
             error = "Check for appropriate inputs and try again"
         )
 

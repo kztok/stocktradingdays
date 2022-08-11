@@ -23,12 +23,21 @@ body {
 
 .main {
     padding: 16px 24px;
-}
-
-.one,.two {
     font-size: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
+.left {
+    margin-top: 22px;
+}
+
+#stock {
+    text-align: center;
+}
+
+/* increase size of input */
 #from1,#to,#from2,#days{
     font-size: 18px;
 }
